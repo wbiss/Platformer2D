@@ -15,7 +15,7 @@ public class StatusIndicator : MonoBehaviour
         
     }
 
-    public void setHealth(int _current, int _max)
+    public void SetHealth(int _current, int _max)
     {
         float _value = (float)_current / _max;
 

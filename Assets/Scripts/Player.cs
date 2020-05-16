@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    //public HealthBar healthBar;
+
+    [System.Serializable]
     public class PlayerStats
     {
+        public HealthBar healthBar;
+
         public int maxHealth = 3;
         private int _currentHealth;
         public int currentHealth
@@ -14,9 +20,10 @@ public class Player : MonoBehaviour
             set { _currentHealth = Mathf.Clamp(value, 0, maxHealth); }
         }
 
-        public void init()
+        public void Init()
         {
             _currentHealth = maxHealth;
+            healthBar.SetMaxHealth(maxHealth);
         }
     }
 
@@ -27,7 +34,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        playerStats.init();
+        playerStats.Init();
 
         if(statusIndicator==null)
         {
@@ -35,19 +42,21 @@ public class Player : MonoBehaviour
         }
         else
         {
-            statusIndicator.setHealth(playerStats.currentHealth, playerStats.maxHealth);
+            statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);
         }
     }
 
-    public void damagePlayer(int damage)
+
+    public void DamagePlayer(int damage)
     {
         playerStats.currentHealth -= damage;
+        playerStats.healthBar.SetHealth(playerStats.currentHealth+1);
 
-        if(playerStats.currentHealth<=0)
+        if (playerStats.currentHealth<=0)
         {
             GameMaster.killPlayer(this);
         }
 
-        statusIndicator.setHealth(playerStats.currentHealth, playerStats.maxHealth);
+        statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);
     }
 }

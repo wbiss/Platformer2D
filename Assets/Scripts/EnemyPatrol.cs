@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
+    [System.Serializable]
     public class EnemyStats
     {
         public int maxHealth = 1;
@@ -14,7 +15,9 @@ public class EnemyPatrol : MonoBehaviour
             set { _currentHealth = Mathf.Clamp(value, 0, maxHealth); }
         }
 
-        public void init()
+        public int damage = 1;
+
+        public void Init()
         {
             _currentHealth = maxHealth;
         }
@@ -34,11 +37,11 @@ public class EnemyPatrol : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyStats.init();
+        enemyStats.Init();
 
         if(statusIndicator!=null)
         {
-            statusIndicator.setHealth(enemyStats.currentHealth, enemyStats.maxHealth);
+            statusIndicator.SetHealth(enemyStats.currentHealth, enemyStats.maxHealth);
         }
     }
 
@@ -59,6 +62,16 @@ public class EnemyPatrol : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 movingLeft = true;
             }
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D _colInfo)
+    {
+        Player _player = _colInfo.collider.GetComponent<Player>();
+
+        if(_player!=null)
+        {
+            _player.DamagePlayer(enemyStats.damage);
         }
     }
 }
