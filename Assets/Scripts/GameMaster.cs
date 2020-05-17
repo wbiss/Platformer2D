@@ -18,8 +18,19 @@ public class GameMaster : MonoBehaviour
     //public Sprite heartSprite;
     //public static int numOfHearts = _maxLives;
 
+    private static int _maxCollectedItems = 1;
+    private static int _collectedItems = 0;
+    public static int CollectedItems
+    {
+        get { return _collectedItems; }
+        set { _collectedItems = value; }
+    }
+
     [SerializeField]
     private GameObject gameOverUI;
+
+    [SerializeField]
+    private GameObject winUI;
 
     void Start()
     {
@@ -27,10 +38,15 @@ public class GameMaster : MonoBehaviour
         {
             gameMaster = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
         }
+        _collectedItems = 0;
     }
 
-    //void Update()
-    //{
+    void Update()
+    {
+        if(_collectedItems==_maxCollectedItems)
+        {
+            WinGame();
+        }
     //    for(int i=0;i<hearts.Length;i++)
     //    {
     //        if(i<numOfHearts)
@@ -42,8 +58,13 @@ public class GameMaster : MonoBehaviour
     //            hearts[i].enabled = false;
     //        }
     //    }
-    //}
+    }
 
+    public void WinGame()
+    {
+        Debug.Log("YOU WON");
+        winUI.SetActive(true);
+    }
     public void EndGame(Player player)
     {
         Debug.Log("GAME OVER");
