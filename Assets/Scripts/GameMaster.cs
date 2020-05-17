@@ -23,7 +23,7 @@ public class GameMaster : MonoBehaviour
 
     void Start()
     {
-        if(gameMaster==null)
+        if (gameMaster == null)
         {
             gameMaster = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
         }
@@ -67,10 +67,12 @@ public class GameMaster : MonoBehaviour
 
         _remainingLives--;
         //numOfHearts--;
-        if(_remainingLives<=0)
+        if (_remainingLives <= 0)
         {
             gameMaster.EndGame(player);
         }
         //gameMaster.RespawnPlayer();
     }
+
+    
 }

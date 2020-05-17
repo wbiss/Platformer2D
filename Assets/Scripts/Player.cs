@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    //public HealthBar healthBar;
+    //Rigidbody2D playerBody;
+    //public float jumpVelocity = 10;
 
     [System.Serializable]
     public class PlayerStats
@@ -55,8 +55,31 @@ public class Player : MonoBehaviour
         if (playerStats.currentHealth<=0)
         {
             GameMaster.killPlayer(this);
+
         }
 
         statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        EnemyPatrol _enemy = collision.collider.GetComponent<EnemyPatrol>();
+        if (_enemy != null)
+        {
+            foreach (ContactPoint2D point in collision.contacts)
+            {
+                if (point.normal.y >= 0.9f)
+                {
+                    //Vector2 velocity = playerBody.velocity;
+                    //velocity = jumpVelocity*Vector2.up;
+                    //playerBody.velocity = velocity;
+                    _enemy.KillEnemy();
+                }
+                else
+                {
+                    DamagePlayer(_enemy.enemyStats.damage);
+                }
+            }
+        }
     }
 }

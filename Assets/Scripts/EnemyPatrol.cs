@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
+    public Animator animator;
+
     [System.Serializable]
     public class EnemyStats
     {
@@ -23,7 +25,7 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
-
+    private bool shouldMove = true;
     public float speed;
     private bool movingLeft = true;
     public Transform edgeDetection;
@@ -48,30 +50,40 @@ public class EnemyPatrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
-        RaycastHit2D edgeInfo = Physics2D.Raycast(edgeDetection.position,Vector2.down,2.0f);
-        if(edgeInfo.collider==false)
+        if (shouldMove)
         {
-            if(movingLeft==true)
+            transform.Translate(Vector2.left * speed * Time.deltaTime);
+            RaycastHit2D edgeInfo = Physics2D.Raycast(edgeDetection.position, Vector2.down, 2.0f);
+            if (edgeInfo.collider == false)
             {
-                transform.eulerAngles = new Vector3(0, -180, 0);
-                movingLeft = false;
-            }
-            else
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                movingLeft = true;
+                if (movingLeft == true)
+                {
+                    transform.eulerAngles = new Vector3(0, -180, 0);
+                    movingLeft = false;
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    movingLeft = true;
+                }
             }
         }
     }
 
-    void OnCollisionEnter2D(Collision2D _colInfo)
-    {
-        Player _player = _colInfo.collider.GetComponent<Player>();
+    //void OnCollisionEnter2D(Collision2D _colInfo)
+    //{
+    //    Player _player = _colInfo.collider.GetComponent<Player>();
 
-        if(_player!=null)
-        {
-            _player.DamagePlayer(enemyStats.damage);
-        }
+    //    if(_player!=null)
+    //    {
+    //        _player.DamagePlayer(enemyStats.damage);
+    //    }
+    //}
+
+    public void KillEnemy()
+    {
+        animator.SetBool("IsDead", true);
+        shouldMove = false;
+        Destroy(this.gameObject, 0.2f);
     }
 }

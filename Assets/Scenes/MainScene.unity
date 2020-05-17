@@ -224,7 +224,7 @@ RectTransform:
   - {fileID: 2056447964}
   - {fileID: 1093589570}
   m_Father: {fileID: 890999079}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -840,7 +840,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597898147}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -848,7 +848,7 @@ RectTransform:
   - {fileID: 167477896}
   - {fileID: 1746783549}
   m_Father: {fileID: 890999079}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -958,6 +958,7 @@ GameObject:
   - component: {fileID: 619773867}
   - component: {fileID: 619773870}
   - component: {fileID: 619773871}
+  - component: {fileID: 619773872}
   m_Layer: 0
   m_Name: Opossum
   m_TagString: Untagged
@@ -1060,6 +1061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819dea85894802f45830ca45931c289b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 619773867}
   speed: 3
   edgeDetection: {fileID: 1610586363}
   enemyStats:
@@ -1092,6 +1094,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3943486, y: 1.0355515}
   m_EdgeRadius: 0
+--- !u!50 &619773872
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619773866}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &755945190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4970817521453030467, guid: 0596235ffe000a745a0ad4229fc76138,
@@ -1194,8 +1217,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 107674900}
   - {fileID: 597898148}
+  - {fileID: 107674900}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
