@@ -49,13 +49,12 @@ public class Player : MonoBehaviour
 
     public void DamagePlayer(int damage)
     {
+        playerStats.healthBar.SetHealth(playerStats.currentHealth);
         playerStats.currentHealth -= damage;
-        playerStats.healthBar.SetHealth(playerStats.currentHealth+1);
 
         if (playerStats.currentHealth<=0)
         {
             GameMaster.killPlayer(this);
-
         }
 
         statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);
