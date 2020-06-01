@@ -11,6 +11,7 @@ namespace UnityStandardAssets._2D
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
         public float xPosMin = -9.5f;
+        public float xPosMax = 0.0f;
 
         private float m_OffsetZ;
         private Vector3 m_LastTargetPosition;
@@ -57,6 +58,11 @@ namespace UnityStandardAssets._2D
             if(newPos.x<xPosMin)
             {
                 newPos.x = xPosMin;
+            }
+
+            if(newPos.x>xPosMax)
+            {
+                newPos.x = xPosMax;
             }
 
             transform.position = newPos;
