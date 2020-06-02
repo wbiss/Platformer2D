@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPatrol : MonoBehaviour
+public class EnemyFly : MonoBehaviour
 {
     public Animator animator;
+
+    Vector3 origin;
+    Transform _trans;
 
     [System.Serializable]
     public class EnemyStats
@@ -27,8 +30,6 @@ public class EnemyPatrol : MonoBehaviour
 
     private bool shouldMove = true;
     public float speed;
-    private bool movingLeft = true;
-    public Transform edgeDetection;
 
     public EnemyStats enemyStats = new EnemyStats();
 
@@ -40,8 +41,9 @@ public class EnemyPatrol : MonoBehaviour
     void Start()
     {
         enemyStats.Init();
-
-        if(statusIndicator!=null)
+        _trans = GetComponent<Transform>();
+        origin = _trans.position;
+        if (statusIndicator != null)
         {
             statusIndicator.SetHealth(enemyStats.currentHealth, enemyStats.maxHealth);
         }
@@ -52,24 +54,11 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (shouldMove)
         {
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
-            RaycastHit2D edgeInfo = Physics2D.Raycast(edgeDetection.position, Vector2.down, 2.0f);
-            if (edgeInfo.collider == false)
-            {
-                if (movingLeft == true)
-                {
-                    transform.eulerAngles = new Vector3(0, -180, 0);
-                    movingLeft = false;
-                }
-                else
-                {
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                    movingLeft = true;
-                }
-            }
+            _trans.position = new Vector3(origin.x, origin.y + speed*Mathf.PingPong(Time.time, 1), origin.z);
         }
+        
     }
-    
+
     public void KillEnemy()
     {
         animator.SetBool("IsDead", true);

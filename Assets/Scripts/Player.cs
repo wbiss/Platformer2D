@@ -62,8 +62,8 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        EnemyPatrol _enemy = collision.collider.GetComponent<EnemyPatrol>();
-        if (_enemy != null)
+        EnemyPatrol _enemyPatrol = collision.collider.GetComponent<EnemyPatrol>();
+        if (_enemyPatrol != null)
         {
             foreach (ContactPoint2D point in collision.contacts)
             {
@@ -72,11 +72,29 @@ public class Player : MonoBehaviour
                     //Vector2 velocity = playerBody.velocity;
                     //velocity = jumpVelocity*Vector2.up;
                     //playerBody.velocity = velocity;
-                    _enemy.KillEnemy();
+                    _enemyPatrol.KillEnemy();
                 }
                 else
                 {
-                    DamagePlayer(_enemy.enemyStats.damage);
+                    DamagePlayer(_enemyPatrol.enemyStats.damage);
+                }
+            }
+        }
+        EnemyFly _enemyFly = collision.collider.GetComponent<EnemyFly>();
+        if (_enemyFly != null)
+        {
+            foreach (ContactPoint2D point in collision.contacts)
+            {
+                if (point.normal.y >= 0.9f)
+                {
+                    //Vector2 velocity = playerBody.velocity;
+                    //velocity = jumpVelocity*Vector2.up;
+                    //playerBody.velocity = velocity;
+                    _enemyFly.KillEnemy();
+                }
+                else
+                {
+                    DamagePlayer(_enemyFly.enemyStats.damage);
                 }
             }
         }

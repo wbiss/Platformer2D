@@ -18,13 +18,14 @@ public class GameMaster : MonoBehaviour
     //public Sprite heartSprite;
     //public static int numOfHearts = _maxLives;
 
-    private static int _maxCollectedItems = 1;
-    private static int _collectedItems = 0;
+    private static int _maxCollectedItems = 5;
+    private static int _collectedItems;
     public static int CollectedItems
     {
         get { return _collectedItems; }
         set { _collectedItems = value; }
     }
+    public static bool isFinished = false;
 
     [SerializeField]
     private GameObject gameOverUI;
@@ -43,7 +44,7 @@ public class GameMaster : MonoBehaviour
 
     void Update()
     {
-        if(_collectedItems==_maxCollectedItems)
+        if((_collectedItems==_maxCollectedItems) && (isFinished==true))
         {
             WinGame();
         }
