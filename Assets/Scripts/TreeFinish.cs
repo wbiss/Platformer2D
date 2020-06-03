@@ -6,7 +6,7 @@ public class TreeFinish : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player")&& GameMaster.isCollected==true)
         {
             GameMaster.isFinished = true;
         }

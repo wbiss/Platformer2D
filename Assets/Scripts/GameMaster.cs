@@ -26,7 +26,7 @@ public class GameMaster : MonoBehaviour
         set { _collectedItems = value; }
     }
     public static bool isFinished = false;
-
+    public static bool isCollected = false;
     [SerializeField]
     private GameObject gameOverUI;
 
@@ -44,21 +44,25 @@ public class GameMaster : MonoBehaviour
 
     void Update()
     {
-        if((_collectedItems==_maxCollectedItems) && (isFinished==true))
+        if(_collectedItems==_maxCollectedItems)
+        {
+            isCollected = true;
+        }
+        if (isFinished == true)
         {
             WinGame();
         }
-    //    for(int i=0;i<hearts.Length;i++)
-    //    {
-    //        if(i<numOfHearts)
-    //        {
-    //            hearts[i].enabled = true;
-    //        }
-    //        else
-    //        {
-    //            hearts[i].enabled = false;
-    //        }
-    //    }
+        //    for(int i=0;i<hearts.Length;i++)
+        //    {
+        //        if(i<numOfHearts)
+        //        {
+        //            hearts[i].enabled = true;
+        //        }
+        //        else
+        //        {
+        //            hearts[i].enabled = false;
+        //        }
+        //    }
     }
 
     public void WinGame()
@@ -69,7 +73,7 @@ public class GameMaster : MonoBehaviour
     public void EndGame(Player player)
     {
         Debug.Log("GAME OVER");
-        Destroy(player.gameObject);
+        Destroy(player.gameObject, 0.2f);
 
         gameOverUI.SetActive(true);
         _remainingLives = _maxLives;
