@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     //Rigidbody2D playerBody;
     //public float jumpVelocity = 10;
 
+    public Animator animator;
+    private bool isInvincible = false;
     [System.Serializable]
     public class PlayerStats
     {
@@ -46,11 +48,10 @@ public class Player : MonoBehaviour
         }
     }
 
-
     public void DamagePlayer(int damage)
     {
-        playerStats.healthBar.SetHealth(playerStats.currentHealth);
         playerStats.currentHealth -= damage;
+        playerStats.healthBar.SetHealth(playerStats.currentHealth);
 
         if (playerStats.currentHealth<=0)
         {
@@ -62,42 +63,62 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        EnemyPatrol _enemyPatrol = collision.collider.GetComponent<EnemyPatrol>();
-        if (_enemyPatrol != null)
+        if (!isInvincible)
         {
-            foreach (ContactPoint2D point in collision.contacts)
+            EnemyPatrol _enemyPatrol = collision.collider.GetComponent<EnemyPatrol>();
+            if (_enemyPatrol != null)
             {
-                if (point.normal.y >= 0.9f)
+                foreach (ContactPoint2D point in collision.contacts)
                 {
-                    //Vector2 velocity = playerBody.velocity;
-                    //velocity = jumpVelocity*Vector2.up;
-                    //playerBody.velocity = velocity;
-                    _enemyPatrol.KillEnemy();
-                }
-                else
-                {
-                    DamagePlayer(_enemyPatrol.enemyStats.damage);
+                    if (point.normal.y >= 0.9f)
+                    {
+                        //Vector2 velocity = playerBody.velocity;
+                        //velocity = jumpVelocity*Vector2.up;
+                        //playerBody.velocity = velocity;
+                        _enemyPatrol.KillEnemy();
+                    }
+                    else
+                    {
+                        DamagePlayer(_enemyPatrol.enemyStats.damage);
+                        StartCoroutine("BeInvincible");
+
+                    }
                 }
             }
-        }
-        EnemyFly _enemyFly = collision.collider.GetComponent<EnemyFly>();
-        if (_enemyFly != null)
-        {
-            foreach (ContactPoint2D point in collision.contacts)
+            EnemyFly _enemyFly = collision.collider.GetComponent<EnemyFly>();
+            if (_enemyFly != null)
             {
-                if (point.normal.y >= 0.9f)
+                foreach (ContactPoint2D point in collision.contacts)
                 {
-                    //Vector2 velocity = playerBody.velocity;
-                    //velocity = jumpVelocity*Vector2.up;
-                    //playerBody.velocity = velocity;
-                    _enemyFly.KillEnemy();
-                }
-                else
-                {
-                    DamagePlayer(_enemyFly.enemyStats.damage);
+                    if (point.normal.y >= 0.9f)
+                    {
+                        //Vector2 velocity = playerBody.velocity;
+                        //velocity = jumpVelocity*Vector2.up;
+                        //playerBody.velocity = velocity;
+                        _enemyFly.KillEnemy();
+                    }
+                    else
+                    {
+                        DamagePlayer(_enemyFly.enemyStats.damage);
+                        StartCoroutine("BeInvincible");
+
+                    }
                 }
             }
         }
        
+    }
+
+    IEnumerator BeInvincible()
+    {
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        int playerLayer = LayerMask.NameToLayer("Player");
+        isInvincible = true;
+        Physics2D.IgnoreLayerCollision(enemyLayer,playerLayer);
+        animator.SetLayerWeight(1, 1);
+        yield return new WaitForSeconds(3);
+        Physics2D.IgnoreLayerCollision(enemyLayer, playerLayer, false);
+        isInvincible = false;
+        animator.SetLayerWeight(1,0);
     }
 }
