@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeFinish : MonoBehaviour
+public class HouseFinish : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D other)
     {

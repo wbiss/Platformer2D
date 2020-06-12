@@ -35,6 +35,7 @@ public class GameMaster : MonoBehaviour
 
     void Start()
     {
+        isFinished = false;
         if (gameMaster == null)
         {
             gameMaster = GameObject.FindGameObjectWithTag("GameMaster").GetComponent<GameMaster>();
