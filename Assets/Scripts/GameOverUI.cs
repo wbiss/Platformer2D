@@ -7,6 +7,7 @@ public class GameOverUI : MonoBehaviour
 {
     public void Quit()
     {
+        Debug.Log("QUIT");
         Application.Quit();
     }
 
