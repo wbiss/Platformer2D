@@ -34,11 +34,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     private StatusIndicator statusIndicator;
 
+    
+
     void Start()
     {
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        int playerLayer = LayerMask.NameToLayer("Player");
         playerStats.Init();
-
-        if(statusIndicator==null)
+        Physics2D.IgnoreLayerCollision(enemyLayer, playerLayer, false);
+        //isInvincible = false;
+        //animator.SetLayerWeight(1, 0);
+        if (statusIndicator==null)
         {
             Debug.LogError("No status referenced on player.");
         }
